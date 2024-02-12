@@ -39,6 +39,41 @@ void Camera::Inputs(GLFWwindow *window) {
     if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         Position += speed * glm::normalize(glm::cross(Orientation, UP));
     }
+    if(glfwGetKey(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
+        if(firstClick){
+            glfwSetCursorPos(window, (width / 2), (height / 2));
+            firstClick = false;
+
+        }
+        double mouseX, mouseY;
+        glfwGetCursorPos(window, &mouseX, &mouseY);
+        float rotX = sensitivity * (float)(mouseY - (height / 2)) / height;
+        float rotY = sensitivity * (float)(mouseX - (height / 2)) / height;
+
+        // Calculates upcoming vertical change in the Orientation
+        glm::vec3 newOrientation = glm::rotate(Orientation, glm::radians(-rotX), glm::normalize(glm::cross(Orientation, UP)));
+
+        // Decides whether or not the next vertical Orientation is legal or not
+        if (!((glm::angle(newOrientation, UP) <= glm::radians(5.0f) or(glm::angle(newOrientation, -UP) <= glm::radians(5.0f)))))
+        {
+            Orientation = newOrientation;
+        }
+
+        // Rotates the Orientation left and right
+        Orientation = glm::rotate(Orientation, glm::radians(-rotY), UP);
+
+        // Sets mouse cursor to the middle of the screen so that it doesn't end up roaming around
+        glfwSetCursorPos(window, (width / 2), (height / 2));
+        ImGui::SetCursorPos(ImVec2{(float)(width / 2), (float)(height / 2)});
+
+
+    }else if(glfwGetKey(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE){
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        firstClick = true;
+
+    }
 
 }
 

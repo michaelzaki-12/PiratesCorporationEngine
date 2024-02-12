@@ -51,8 +51,8 @@ int main() {
     }
     // making our current window the window we just created
     glfwMakeContextCurrent(window);
-    std::shared_ptr<PiratesImgui> Gui;
-    Gui->Imgui_init(window);
+//    std::shared_ptr<PiratesImgui> Gui;
+//    Gui->Imgui_init(window);
     //loading opengl using glad
     gladLoadGL();
 
@@ -74,14 +74,14 @@ int main() {
     VBO.UnBind();
     IBO.UnBind();
 
-    Texture Texture("Textures/PiratesSkullFinal.png");
-    OpenGLFrameBuffer FrameBuffer;
-    FrameBuffer.GenerateFrameBuffer(width, height);
+    Texture Texture("Textures/Pirates.png");
+//    OpenGLFrameBuffer FrameBuffer;
+//    FrameBuffer.GenerateFrameBuffer(width, height);
 
     GLuint tex0Uni = glGetUniformLocation(shader.ID, "tex0");
     shader.Activate();
     glUniform1i(tex0Uni, 0);
-    GLfloat NumOfVert = sizeof(Vertices) / sizeof(GLfloat);
+//    GLfloat NumOfVert = sizeof(Vertices) / sizeof(GLfloat);
 
     GLuint uniID = glGetUniformLocation(shader.ID, "scale");
 
@@ -106,19 +106,18 @@ int main() {
         if (Width != width || Height != height) {
             PiratesWindowEvents->UpdateFrameBuffer(window, WInPixel, HInPixel);
         }
-        Gui->UpdateImgui();
-        ImGui::DockSpaceOverViewport();
-        ImGui::StyleColorsLight();
-        ImGui::Begin("ViewPort");
-        //ImVec2 PanelSize = ImGui::GetContentRegionAvail();
-        float window_width = ImGui::GetContentRegionAvail().x;
-        float window_height = ImGui::GetContentRegionAvail().y;
-        FrameBuffer.Scale(window_width, window_height);
-        glViewport(0, 0, window_width, window_height);
+//        Gui->UpdateImgui();
+//        ImGui::DockSpaceOverViewport();
 
-        //ImVec2 pos = ImGui::GetCursorScreenPos();
-        ImGui::Image((void*)(uint64_t)FrameBuffer.TEXID, ImVec2{window_width, window_height}, ImVec2{0, 1}, ImVec2{1, 0});
-        ImGui::End();
+
+//        ImGui::BeginMainMenuBar();
+//        ImGui::Button("Settings");
+
+//        ImGui::EndMainMenuBar();
+
+
+//        ImGui::StyleColorsLight();
+//        Gui->ImGui_Init_Viewport(FrameBuffer);
         // giving the color of window
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         double crnttime = glfwGetTime();
@@ -129,10 +128,9 @@ int main() {
         camera.Matrix(45.0f, 1.0f, 100.0f, shader, "camMatrix");
 
         //executing the color of the window
-        FrameBuffer.Bind();
+//        FrameBuffer.Bind();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //FrameBuffer.Scale(Width, Height);
         shader.Activate();
 
         glUniform1f(uniID, 0.5f);
@@ -140,21 +138,21 @@ int main() {
 
         VAO.Bind();
         glDrawElements(GL_TRIANGLES, sizeof(IndexBuffer) / sizeof(int), GL_UNSIGNED_INT, nullptr);
-        FrameBuffer.UNBind();
+//        FrameBuffer.UNBind();
 
-        ImGui::Begin("Properties");
-        ImGui::Text("Vertices");
-        ImGui::Text("%f", NumOfVert * ((float) 3 / 8));
-        ImGui::Text("Texture: ");
-        ImGui::Image((void*)(uint64_t)tex0Uni, ImVec2{256, 256});
+//        ImGui::Begin("Properties");
+//        ImGui::Text("Vertices");
+//        ImGui::Text("%f", NumOfVert * ((float) 3 / 8));
+//        ImGui::Text("Texture: ");
+//        ImGui::Image((void*)(uint64_t)tex0Uni, ImVec2{64, 64}, ImVec2{0 ,1}, ImVec2{1, 0});
 
-        ImGui::End();
+//        ImGui::End();
 
 
         // Rendering
         // (Your code clears your framebuffer, renders your other stuff etc.)
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+//        ImGui::Render();
+//        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         // (Your code calls glfwSwapBuffers() etc.)
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -166,9 +164,7 @@ int main() {
     IBO.Delete();
     shader.Delete();
     Texture.Delete();
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+//    Gui->ImGui_Delete();
     //delete PiratesWindowEvents;
     //destroying opengl window and termination of glfw
     glfwDestroyWindow(window);

@@ -26,3 +26,24 @@ void PiratesImgui::UpdateImgui() {
     ImGui::NewFrame();
 
 }
+
+void PiratesImgui::ImGui_Init_Viewport(OpenGLFrameBuffer frameBuffer) {
+    ImGui::Begin("ViewPort");
+    //ImVec2 PanelSize = ImGui::GetContentRegionAvail();
+    float window_width = ImGui::GetContentRegionAvail().x;
+    float window_height = ImGui::GetContentRegionAvail().y;
+    frameBuffer.Scale(window_width, window_height);
+    glViewport(0, 0, window_width, window_height);
+
+    //ImVec2 pos = ImGui::GetCursorScreenPos();
+    ImGui::Image((void*)(uint64_t)frameBuffer.TEXID, ImVec2{window_width, window_height}, ImVec2{0, 1}, ImVec2{1, 0});
+    ImGui::End();
+
+}
+
+void PiratesImgui::ImGui_Delete() {
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
+}

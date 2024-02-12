@@ -7,7 +7,7 @@
 Texture::Texture(const char* image){
     int w, h , NumofColorCH;
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* bytes = stbi_load(image, &w, &h, &NumofColorCH, 0);
+    unsigned char* bytes = stbi_load(image, &w, &h, &NumofColorCH, 4);
     glGenTextures(1, &texture);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
