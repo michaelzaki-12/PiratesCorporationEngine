@@ -26,7 +26,7 @@ public:
     // Prevents the camera from jumping around when first clicking left click
     bool firstClick = true;
     int width, height;
-    float speed = 0.1f, sensitivity = 100.0f;
+    float speed = 0.1f, sensitivity = 10.0f;
 
     Camera(int width, int height, glm::vec3 position);
     void UpdateCamera(int width, int height, glm::vec3 position);
