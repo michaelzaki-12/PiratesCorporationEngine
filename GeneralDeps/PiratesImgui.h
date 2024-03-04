@@ -6,6 +6,7 @@
 #define PIRATESENGINE_PIRATESIMGUI_H
 
 #include "../imgui-docking/imgui.h"
+#include "../imgui-docking/imgui_internal.h"
 #include "../imgui-docking/backends/imgui_impl_glfw.h"
 #include "../imgui-docking/backends/imgui_impl_opengl3.h"
 #include "../OpenGLFrameBuffer.h"

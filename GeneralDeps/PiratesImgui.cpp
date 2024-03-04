@@ -28,6 +28,9 @@ void PiratesImgui::UpdateImgui() {
 }
 
 void PiratesImgui::ImGui_Init_Viewport(OpenGLFrameBuffer frameBuffer) {
+    ImGuiWindowClass window_class;
+    window_class.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
+    ImGui::SetNextWindowClass(&window_class);
     ImGui::Begin("ViewPort");
     //ImVec2 PanelSize = ImGui::GetContentRegionAvail();
     float window_width = ImGui::GetContentRegionAvail().x;

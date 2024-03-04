@@ -11,10 +11,12 @@
 class Texture{
 public:
     Texture(const char* image);
+    static unsigned int LoadTexture(const char* image);
     void TextureRef(int Width, int Height, unsigned char* bytes);
     void Bind();
     void UnBind();
     void Delete();
+    void DeleteLoadTexture(GLuint TEX);
     GLuint texture;
 };
 
